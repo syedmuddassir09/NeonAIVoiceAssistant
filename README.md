@@ -1,314 +1,213 @@
-# 🤖 NEON — Personal AI Voice Assistant
+# 🤖 NEON — Your Personal Voice-Controlled AI Assistant
 
-NEON is a personal AI voice assistant built with Python.
+NEON is a **Python-based personal AI assistant** designed to interact with and control your computer through voice commands.
 
-The project is being developed step by step to create an assistant that can listen to voice commands, understand them, remember user information, respond using speech, and eventually control applications and other tools on the computer.
+The goal of NEON is to make computer interaction more natural by allowing you to communicate with your PC using your voice. As the project develops, NEON will become capable of understanding natural-language commands, using APIs, performing computer tasks, and assisting with everyday activities.
 
-## 🚀 Project Goal
+> 🚧 **Current Status:** Basic voice-controlled version working — actively under development.
 
-The long-term goal of NEON is to become a personal desktop AI assistant that can:
+---
 
-* 🎤 Listen to voice commands
-* 🧠 Understand natural language
-* 🔊 Respond using voice
-* 💾 Remember user information
-* 👋 Respond when called by the wake word **"NEON"**
-* 🖥️ Open applications
-* 🌐 Open websites
-* 🔎 Search the web
-* 📂 Work with files
-* ⚙️ Control system functions
-* 🤖 Use an LLM for intelligent conversations
-* 🛠️ Execute tools based on user commands
+## ✨ Features
 
-## 🏗️ Current Architecture
+### 🎤 Voice Interaction
 
-```text
-                    🎤 Microphone
-                         │
-                         ▼
-                  Speech Recognition
-                         │
-                         ▼
-                    🧠 NEON Brain
-                         │
-              ┌──────────┴──────────┐
-              ▼                     ▼
-         💾 Memory              🛠️ Tools
-              │                     │
-              └──────────┬──────────┘
-                         ▼
-                    📝 Response
-                         │
-                         ▼
-                    🔊 Text-to-Speech
-                         │
-                         ▼
-                    🖥️ User
-```
+* Listen to user voice commands.
+* Convert speech into text.
+* Process commands through the NEON system.
 
-## 📁 Project Structure
+### 🧠 Command Processing
+
+* Process user commands.
+* Detect the NEON wake word.
+* Detect sleep and exit commands.
+* Route commands through the assistant's response system.
+
+### 🔊 Voice Response
+
+* NEON can respond to the user using text-to-speech.
+
+### 💤 Sleep Mode
+
+NEON can temporarily stop listening when the user says commands such as:
+
+* `wait`
+* `stop`
+* `go to sleep`
+* `sleep`
+* `that's all`
+
+### 🔴 Exit Commands
+
+NEON can be completely stopped using commands such as:
+
+* `shutdown neon`
+* `exit neon`
+* `quit neon`
+
+---
+
+## 📂 Project Structure
 
 ```text
 NEON/
 │
-├── .venv/                  # Python virtual environment
+├── main.py
 │
-├── assets/                 # Project assets
-│
-├── brain/                  # NEON's decision-making logic
-│   └── response.py
-│
-├── memory/                 # Persistent user memory
-│   ├── memory.py
-│   └── user_memory.json
-│
-├── tools/                  # System and application tools
-│
-├── voice/                  # Voice input/output
+├── voice/
 │   ├── listen.py
 │   └── speak.py
 │
-├── main.py                 # Main application
-├── test_voice.py           # Voice testing
-├── requirements.txt        # Python dependencies
-├── README.md               # Project documentation
-└── .gitignore              # Git ignored files
+├── brain/
+│   └── response.py
+│
+└── README.md
 ```
 
-## 🎤 Voice Input
+### 📁 `main.py`
 
-NEON uses Python speech recognition to convert microphone input into text.
+The main entry point of NEON.
 
-Example:
+It connects the different components and controls the overall assistant workflow.
 
-```text
-🎤 User: My name is Mudassir
+### 📁 `voice/`
 
-You: my name is mudassir
-```
+Contains the voice-related components.
 
-The recognized text is then passed to NEON's brain for processing.
+#### `listen.py`
 
-## 🔊 Voice Output
+Handles listening to the user's voice and converting it into a command.
 
-NEON uses `pyttsx3` for text-to-speech.
+#### `speak.py`
 
-Example:
+Handles NEON's voice responses using text-to-speech.
 
-```text
-NEON: Hello! I am NEON. How can I help you?
-```
+### 📁 `brain/`
 
-The response is printed to the terminal and spoken through the computer's speakers.
+Contains the logic responsible for processing commands and generating responses.
 
-## 💾 Memory System
+#### `response.py`
 
-NEON has a persistent memory system.
-
-For example, when the user says:
-
-```text
-My name is Mudassir
-```
-
-NEON stores the information in:
-
-```text
-memory/user_memory.json
-```
-
-Example:
-
-```json
-{
-    "name": "Mudassir"
-}
-```
-
-Later, the user can ask:
-
-```text
-What is my name?
-```
-
-NEON retrieves the stored information and responds.
-
-## 🧠 Brain
-
-The current NEON brain is rule-based.
-
-It can recognize commands such as:
-
-```text
-Hello
-Hi
-What is your name?
-My name is Mudassir
-What is my name?
-What time is it?
-Stop
-Exit
-```
-
-The current system uses Python conditions to determine the appropriate response.
-
-The next major upgrade is to replace the rule-based system with an LLM-powered brain.
-
-## 💤 Wake Word
-
-NEON is being developed to work in a wake-word mode.
-
-The intended behavior is:
-
-```text
-😴 NEON sleeping...
-
-You: Hello
-
-NEON: [ignores]
-
-You: Hey NEON
-
-NEON: Yes, I'm listening.
-
-You: Open Chrome
-
-NEON: [processes command]
-```
-
-The keyword **"NEON"** will be used to activate the assistant.
-
-The wake-word system is currently under development.
-
-## 🛠️ Technology Stack
-
-| Technology          | Purpose                   |
-| ------------------- | ------------------------- |
-| Python              | Main programming language |
-| SpeechRecognition   | Speech-to-text            |
-| pyttsx3             | Text-to-speech            |
-| JSON                | Persistent memory         |
-| Git                 | Version control           |
-| GitHub              | Project hosting           |
-| Virtual Environment | Dependency isolation      |
-
-## ⚙️ Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/syedmuddassir09/NEON.git
-```
-
-Enter the project:
-
-```bash
-cd NEON
-```
-
-Create a virtual environment:
-
-```bash
-python -m venv .venv
-```
-
-Activate it on Windows PowerShell:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-Install dependencies:
-
-```powershell
-pip install -r requirements.txt
-```
-
-Run NEON:
-
-```powershell
-python main.py
-```
-
-## 🧪 Testing
-
-Voice output can be tested using:
-
-```powershell
-python test_voice.py
-```
-
-The memory system can also be tested independently.
-
-## 🗺️ Development Roadmap
-
-### ✅ Completed
-
-* [x] Python project structure
-* [x] Virtual environment
-* [x] Voice input
-* [x] Voice output
-* [x] Basic command processing
-* [x] User memory
-* [x] Persistent JSON memory
-* [x] Basic voice assistant loop
-* [x] Git repository
-* [x] GitHub repository
-
-### 🔄 In Progress
-
-* [ ] Reliable wake-word detection
-* [ ] "Hey NEON" interaction
-* [ ] Natural language understanding
-* [ ] Application launcher
-* [ ] Website launcher
-
-### 🔜 Planned
-
-* [ ] LLM integration
-* [ ] Tool calling
-* [ ] Web search
-* [ ] File management
-* [ ] Windows system control
-* [ ] Personalized preferences
-* [ ] Conversation history
-* [ ] Better long-term memory
-* [ ] Vision capabilities
-* [ ] More natural TTS
-* [ ] Fully hands-free operation
-
-## 🎯 Vision
-
-NEON is not intended to remain a simple command-based chatbot.
-
-The goal is to develop it into a personal AI agent capable of understanding natural language, remembering the user, using tools, controlling the computer, and interacting naturally through voice.
-
-```text
-                 🤖 NEON
-
-          "Your Personal AI Assistant"
-
-                    │
-        ┌───────────┼───────────┐
-        ▼           ▼           ▼
-      Voice       Memory       AI
-        │           │           │
-        └───────────┼───────────┘
-                    │
-                  Tools
-                    │
-        ┌───────────┼───────────┐
-        ▼           ▼           ▼
-      Apps        Web          Files
-```
-
-## 👨‍💻 Author
-
-**Syed Mudassir**
-
-NEON is a continuously evolving personal AI assistant project built for learning, experimentation, and practical AI development.
+Processes the user's command and determines the appropriate response.
 
 ---
 
-⭐ If you find this project interesting, consider starring the repository.
+## ▶️ How NEON Works
+
+The basic workflow is:
+
+```text
+       🎤 User Voice
+            │
+            ▼
+      ┌─────────────┐
+      │   Listen    │
+      └──────┬──────┘
+             │
+             ▼
+      ┌─────────────┐
+      │    Brain    │
+      │   Process   │
+      └──────┬──────┘
+             │
+             ▼
+      ┌─────────────┐
+      │   Response  │
+      └──────┬──────┘
+             │
+             ▼
+       🔊 NEON Voice
+```
+
+---
+
+## 💬 Usage Examples
+
+### Start NEON
+
+Run the main Python file:
+
+```bash
+python main.py
+```
+
+NEON starts listening for commands.
+
+### Wake Command
+
+```text
+User: "Neon"
+```
+
+NEON recognizes its wake word and begins processing commands.
+
+### Sleep
+
+```text
+User: "Go to sleep"
+```
+
+NEON enters sleep mode.
+
+### Stop
+
+```text
+User: "Stop"
+```
+
+NEON stops processing commands temporarily.
+
+### Exit
+
+```text
+User: "Shutdown Neon"
+```
+
+NEON shuts down completely.
+
+---
+
+## 🛠️ Technologies
+
+* **Python**
+* **Speech Recognition**
+* **Text-to-Speech**
+* **Python Modules**
+* **AI / LLM Integration** *(planned)*
+* **API Integration** *(planned)*
+
+---
+
+## 🚀 Future Goals
+
+NEON is currently in its basic stage. Planned improvements include:
+
+* 🧠 AI-powered natural-language command understanding
+* 🔌 Dynamic API integration
+* 🖥️ PC application control
+* 🌐 Web and browser automation
+* 📁 File and folder management
+* ⚙️ System controls
+* 💾 Personal memory
+* 🎤 Improved voice recognition
+* 🔊 More natural AI responses
+* 🧩 Tool-based command execution
+* 🤖 Intelligent task automation
+
+The long-term goal is to turn NEON into a powerful personal AI assistant capable of understanding natural language and performing real tasks on the user's PC.
+
+---
+
+## 👨‍💻 Project
+
+**NEON — Your Personal Voice-Controlled AI Assistant**
+
+Built with **Python** and developed incrementally while learning and experimenting with voice technology, AI, automation, APIs, and computer interaction.
+
+---
+
+## 📌 Development Status
+
+NEON is an ongoing personal project.
+
+The current version focuses on building the core voice-assistant architecture. New capabilities will be added progressively as the project evolves.

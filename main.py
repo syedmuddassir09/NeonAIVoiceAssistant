@@ -6,6 +6,7 @@ from brain.response import get_response
 WAKE_WORD = "neon"
 
 SLEEP_WORDS = [
+    "Wait"
     "stop",
     "go to sleep",
     "sleep",
