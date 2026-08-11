@@ -5,15 +5,24 @@ import tempfile
 import os
 
 
-def listen():
+def listen(silent=False):
     """
     Record voice from microphone and convert it into text.
+
+    silent=True:
+        Used while NEON is waiting for the wake word.
+        No unnecessary messages are printed.
+
+    silent=False:
+        Used after NEON is activated.
+        Shows listening messages.
     """
 
     sample_rate = 44100
     duration = 8
 
-    print("🎤 NEON is listening... Speak now!")
+    if not silent:
+        print("🎤 NEON is listening... Speak now!")
 
     audio = sd.rec(
         int(duration * sample_rate),
@@ -24,40 +33,52 @@ def listen():
 
     sd.wait()
 
-    print("🧠 Understanding...")
+    if not silent:
+        print("🧠 Understanding...")
 
-    with tempfile.NamedTemporaryFile(
-        suffix=".wav",
-        delete=False
-    ) as file:
-
-        filename = file.name
-
-    write(
-        filename,
-        sample_rate,
-        audio
-    )
-
-    recognizer = sr.Recognizer()
+    filename = None
 
     try:
+        with tempfile.NamedTemporaryFile(
+            suffix=".wav",
+            delete=False
+        ) as file:
+
+            filename = file.name
+
+        write(
+            filename,
+            sample_rate,
+            audio
+        )
+
+        recognizer = sr.Recognizer()
+
         with sr.AudioFile(filename) as source:
             audio_data = recognizer.record(source)
 
         text = recognizer.recognize_google(audio_data)
 
-        print(f"You: {text}")
+        if not silent:
+            print(f"You: {text}")
 
-        return text.lower()
+        return text.lower().strip()
 
     except sr.UnknownValueError:
-        print("NEON: I didn't understand.")
+
+        if not silent:
+            print("NEON: I didn't understand.")
+
         return ""
 
     except sr.RequestError:
-        print("NEON: Speech service unavailable.")
+
+        if not silent:
+            print("NEON: Speech service unavailable.")
+
         return ""
 
     finally:
-        os.remove(filename)
+
+        if filename and os.path.exists(filename):
+            os.remove(filename)

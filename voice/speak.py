@@ -1,21 +1,18 @@
 import pyttsx3
 
 
-def speak(text: str):
+def speak(text):
 
-    print(f"NEON: {text}")
+    print("🔊 NEON speaking:", text)
 
-    engine = pyttsx3.init("sapi5")
+    engine = pyttsx3.init()
 
     voices = engine.getProperty("voices")
 
-    # Select Microsoft Zira voice
-    for voice in voices:
-        if "Zira" in voice.name:
-            engine.setProperty("voice", voice.id)
-            break
+    # Use Microsoft David
+    engine.setProperty("voice", voices[0].id)
 
-    engine.setProperty("rate", 150)
+    engine.setProperty("rate", 170)
     engine.setProperty("volume", 1.0)
 
     engine.say(text)

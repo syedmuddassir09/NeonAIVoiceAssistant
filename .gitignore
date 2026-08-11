@@ -1,0 +1,12 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Personal memory
+memory/user_memory.json
+
+# Windows shortcuts
+*.lnk
