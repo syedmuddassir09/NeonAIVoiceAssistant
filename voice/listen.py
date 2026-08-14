@@ -18,7 +18,7 @@ def listen(silent=False):
         Shows listening messages.
     """
 
-    sample_rate = 44100
+    sample_rate = 40000
     duration = 8
 
     if not silent:

@@ -44,31 +44,31 @@ def main():
         # SLEEP / WAKE-WORD MODE
         # =====================================
 
-        command = listen(silent=True)
+        # command = listen(silent=False)
 
-        if not command:
-            continue
+        # if not command:
+        #     continue
 
-        command = command.lower().strip()
+        # command = command.lower().strip()
 
         # =====================================
         # COMPLETE SHUTDOWN
         # =====================================
 
-        if is_exit_command(command):
+        # if is_exit_command(command):
 
-            speak("Goodbye. NEON is shutting down.")
+        #     speak("Goodbye. NEON is shutting down.")
 
-            print("🔴 NEON completely stopped.")
+        #     print("🔴 NEON completely stopped.")
 
-            return
+        #     return
 
         # =====================================
         # CHECK WAKE WORD
         # =====================================
 
-        if WAKE_WORD not in command:
-            continue
+        # if WAKE_WORD not in command:
+        #     continue
 
         # =====================================
         # WAKE UP

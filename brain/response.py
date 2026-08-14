@@ -1,6 +1,16 @@
 from datetime import datetime
 from memory.memory import remember, recall
 from tools.open_apps import open_app
+import os
+from dotenv import load_dotenv
+from google import genai
+
+load_dotenv()
+
+api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+
+if not api_key:
+    raise ValueError("No Google/Gemini API key found in .env. Add GOOGLE_API_KEY or GEMINI_API_KEY.")
 
 
 def get_response(command):
@@ -8,10 +18,16 @@ def get_response(command):
     command = command.lower().strip()
 
     # Open applications/websites
-    app_response = open_app(command)
+    # app_response = open_app(command)
 
+    client = genai.Client(api_key=api_key)
+    app_response = client.models.generate_content(
+        model="gemini-3.5-flash",
+        contents=command
+    )
+    print(app_response.text)
     if app_response:
-        return app_response
+        return app_response.text
 
     # Greeting
     if "hello" in command or "hi" in command:
